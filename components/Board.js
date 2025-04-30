@@ -7,6 +7,7 @@ function Board(props) {
   var setBoard = props.setBoard
   var gameOver = props.gameOver
   var setGameOver = props.setGameOver
+  var setWin = props.setWin
 
   // reveal neighbors recursively
   function floodFill(b, row, col) {
@@ -71,6 +72,21 @@ function Board(props) {
     }
     floodFill(newB, row, col)
     setBoard(newB)
+    
+    var won = true
+    for (var r = 0; r < newB.length; r++) {
+      for (var c = 0; c < newB[r].length; c++) {
+        var cell = newB[r][c]
+        if (!cell.mine && !cell.revealed) {
+          won = false
+          break
+        }
+      }
+      if (!won) break
+    }
+    if (won) {
+      setWin(true)
+    }
   }
 
   function flagCell(e, row, col) {

@@ -57,10 +57,12 @@ function createBoard() {
 export default function Home() {
   var [board, setBoard] = useState(createBoard())
   var [gameOver, setGameOver] = useState(false)
+  var [win, setWin] = useState(false)
 
   function resetGame() {
     setBoard(createBoard())
     setGameOver(false)
+    setWin(false)
   }
 
   return (
@@ -72,8 +74,15 @@ export default function Home() {
         setBoard={setBoard}
         gameOver={gameOver}
         setGameOver={setGameOver}
+        setWin={setWin}
       />
-      {gameOver && (
+      {win && (
+        <div className="overlay">
+          <p>You Win!</p>
+          <button onClick={resetGame}>Restart</button>
+        </div>
+      )}
+      {!win && gameOver && (
         <div className="overlay">
           <p>Game Over</p>
           <button onClick={resetGame}>Restart</button>
