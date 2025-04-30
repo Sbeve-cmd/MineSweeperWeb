@@ -127,8 +127,16 @@ function Board(props) {
         <Cell
           key={r + '-' + c}
           cell={board[r][c]}
-          onClick={() => revealCell(r, c)} // attach left click handler
-          onContextMenu={(evt) => flagCell(evt, r, c)} // attach right click handler
+          onClick={function(row, col) {
+            return function() {
+              revealCell(row, col)
+            }
+          }(r, c)}
+          onContextMenu={function(e, row, col) {
+            return function(evt) {
+              flagCell(evt, row, col)
+            }
+          }(null, r, c)}
         />
       )
     }
