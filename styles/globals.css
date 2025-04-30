@@ -1,53 +1,95 @@
-/* styles/globals.css */
-html, body {
-    margin: 0;
-    padding: 0;
-    background: #222;
-    color: #fff;
-    font-family: sans-serif;
-  }
-  .container {
-    text-align: center;
-    padding: 1rem;
-  }
-  .board {
-    display: grid;
-    grid-template-columns: repeat(10, 30px);
-    gap: 2px;
-    justify-content: center;
-    margin-top: 1rem;
-  }
-  .cell {
-    width: 30px;
-    height: 30px;
-    background: #555;
-    border: 1px solid #444;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    user-select: none;
-  }
-  .cell.revealed {
-    background: #888;
-    cursor: default;
-  }
-  .cell.flagged {
-    background: #f90;
-    color: #222;
-  }
-  .overlay {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100vw; height: 100vh;
-    background: rgba(0,0,0,0.8);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  button {
-    margin: 0.5rem;
-    padding: 0.5rem 1rem;
-    cursor: pointer;
-  }
-  
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #1d2b64, #f8cdda);
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.container {
+  text-align: center;
+}
+
+h1 {
+  font-size: 3rem;
+  margin-bottom: 20px;
+  background: linear-gradient(45deg, #00dbde, #fc00ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+button {
+  background: #333;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  margin: 10px;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+button:hover {
+  background: #555;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(10, 40px);
+  grid-template-rows: repeat(10, 40px);
+  gap: 5px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.cell {
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  user-select: none;
+  backdrop-filter: blur(5px);
+}
+.cell:hover {
+  transform: scale(1.1);
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 10px #fff;
+}
+.cell.revealed {
+  background: rgba(255, 255, 255, 0.3);
+  cursor: default;
+}
+.cell.mine {
+  background: crimson;
+}
+.cell.flagged {
+  background: gold;
+}
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.8);
+  color: white;
+  font-size: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
