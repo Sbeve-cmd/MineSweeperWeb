@@ -1,0 +1,53 @@
+/* styles/globals.css */
+html, body {
+    margin: 0;
+    padding: 0;
+    background: #222;
+    color: #fff;
+    font-family: sans-serif;
+  }
+  .container {
+    text-align: center;
+    padding: 1rem;
+  }
+  .board {
+    display: grid;
+    grid-template-columns: repeat(10, 30px);
+    gap: 2px;
+    justify-content: center;
+    margin-top: 1rem;
+  }
+  .cell {
+    width: 30px;
+    height: 30px;
+    background: #555;
+    border: 1px solid #444;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    user-select: none;
+  }
+  .cell.revealed {
+    background: #888;
+    cursor: default;
+  }
+  .cell.flagged {
+    background: #f90;
+    color: #222;
+  }
+  .overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: rgba(0,0,0,0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  button {
+    margin: 0.5rem;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+  }
+  
