@@ -6,8 +6,8 @@ import Board from '../components/Board'
 
 // createBoard generates the initial minesweeper grid with mines and counts
 function createBoard() {
-  var SIZE = 10 // board dimensions (rows and columns)
-  var MINES = 15 // total number of mines to place
+  var SIZE = 16 // board dimensions (rows and columns)
+  var MINES = 40 // total number of mines to place
   var grid = [] // initialize empty grid array
 
   // fill grid with default cell objects
