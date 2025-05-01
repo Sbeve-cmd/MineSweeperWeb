@@ -2,28 +2,28 @@
 import React from 'react'
 import Cell from './Cell'
 
+// Board handles game logic and renders a grid of Cell components
 function Board(props) {
+  // Board state, update functions, and status flags
   var board = props.board
   var setBoard = props.setBoard
   var gameOver = props.gameOver
   var setGameOver = props.setGameOver
-  var setFlagsRemaining = props.setFlagsRemaining
+  var setWin = props.setWin
 
-  // reveal neighbors recursively
+  // recursively reveal empty neighboring cells (flood fill algorithm)
   function floodFill(b, row, col) {
-    if (
-      row < 0 ||
-      row >= b.length ||
-      col < 0 ||
-      col >= b[0].length
-    ) {
+    // check boundaries before processing
+    if (row < 0 || row >= b.length || col < 0 || col >= b[0].length) {
       return
     }
     var cell = b[row][col]
+    // stop if already revealed or flagged
     if (cell.revealed || cell.flagged) {
       return
     }
-    cell.revealed = true
+    cell.revealed = true // reveal this cell
+    // if no adjacent mines, continue flood fill on neighbors
     if (!cell.mine && cell.count === 0) {
       for (var dr = -1; dr <= 1; dr++) {
         for (var dc = -1; dc <= 1; dc++) {
@@ -35,11 +35,12 @@ function Board(props) {
     }
   }
 
+  // handle left click on a cell
   function revealCell(row, col) {
     if (gameOver) {
-      return
+      return // exit if game has already ended
     }
-    // copy board
+    // deep copy current board 
     var newB = []
     for (var i = 0; i < board.length; i++) {
       newB[i] = []
@@ -53,12 +54,12 @@ function Board(props) {
         }
       }
     }
-    var clicked = newB[row][col]
+    var clicked = newB[row][col] // get the clicked cell
     if (clicked.revealed || clicked.flagged) {
-      return
+      return // ignore if cell already revealed or flagged
     }
     if (clicked.mine) {
-      // show all mines
+      // reveal all mines when a mine cell is clicked
       for (var r = 0; r < newB.length; r++) {
         for (var c = 0; c < newB[r].length; c++) {
           if (newB[r][c].mine) {
@@ -66,19 +67,38 @@ function Board(props) {
           }
         }
       }
-      setBoard(newB)
-      setGameOver(true)
+      setBoard(newB) // update board with all mines shown
+      setGameOver(true) // end the game
       return
     }
+    // reveal clicked cell and its neighbors if empty
     floodFill(newB, row, col)
-    setBoard(newB)
+    setBoard(newB) // update board state
+
+    // check win condition: ensure all non-mine cells are revealed
+    var won = true
+    for (var r = 0; r < newB.length; r++) {
+      for (var c = 0; c < newB[r].length; c++) {
+        var cell = newB[r][c]
+        if (!cell.mine && !cell.revealed) {
+          won = false
+          break
+        }
+      }
+      if (!won) break
+    }
+    if (won) {
+      setWin(true) // set win state if condition met
+    }
   }
 
+  // handle right click to toggle flag on a cell
   function flagCell(e, row, col) {
-    e.preventDefault()
+    e.preventDefault() // prevent default context menu
     if (gameOver) {
-      return
+      return // do nothing if game has ended
     }
+    // deep copy board for safe state update
     var newB = []
     for (var i = 0; i < board.length; i++) {
       newB[i] = []
@@ -92,15 +112,10 @@ function Board(props) {
         }
       }
     }
-    var cell = newB[row][col]
+    var cell = newB[row][col] // get cell to toggle
     if (!cell.revealed) {
-      cell.flagged = !cell.flagged
-      if (cell.flagged) {
-        setFlagsRemaining(function(prev) { return prev - 1 })
-      } else {
-        setFlagsRemaining(function(prev) { return prev + 1 })
-      }
-      setBoard(newB)
+      cell.flagged = !cell.flagged // toggle flag state
+      setBoard(newB) // update board with new flag state
     }
   }
 
@@ -127,6 +142,7 @@ function Board(props) {
     }
   }
 
+  // render the board grid using cell components
   return <div className="board">{cells}</div>
 }
 
