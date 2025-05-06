@@ -40,8 +40,8 @@ button:hover {
 
 .board {
   display: grid;
-  grid-template-columns: repeat(16, 40px);
-  grid-template-rows: repeat(16, 40px);
+  grid-template-columns: repeat(12, 40px);
+  grid-template-rows: repeat(12, 40px);
   gap: 5px;
   justify-content: center;
   margin-top: 20px;
