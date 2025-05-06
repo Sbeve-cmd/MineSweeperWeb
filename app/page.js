@@ -72,7 +72,7 @@ export default function Home() {
   // state hook for elapsed time in seconds
   var [seconds, setSeconds] = useState(0)
   // constant for total mines (flag counter reference)
-  var TOTAL_MINES = 40
+  var TOTAL_MINES = 30
 
   // effect hook to update timer every second when game is active
   useEffect(() => {
