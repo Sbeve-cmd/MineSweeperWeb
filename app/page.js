@@ -1,7 +1,7 @@
 // app/page.js
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Board from '../components/Board'
 
 // createBoard generates the initial minesweeper grid with mines and counts
@@ -69,19 +69,42 @@ export default function Home() {
   var [board, setBoard] = useState(createBoard())
   var [gameOver, setGameOver] = useState(false)
   var [win, setWin] = useState(false)
+  // state hook for elapsed time in seconds
+  var [seconds, setSeconds] = useState(0)
+  // constant for total mines (flag counter reference)
+  var TOTAL_MINES = 40
 
-  // resetGame clears status and generates a new board
+  // effect hook to update timer every second when game is active
+  useEffect(() => {
+    const timer = setInterval(() => {
+      if (!gameOver && !win) {
+        setSeconds((s) => s + 1)
+      }
+    }, 1000)
+    // cleanup interval on unmount or on status change
+    return () => clearInterval(timer)
+  }, [gameOver, win])
+
+  // reset game state, timer, and win flag
   function resetGame() {
     setBoard(createBoard())
     setGameOver(false)
     setWin(false)
+    setSeconds(0)
   }
 
-  // render header, controls, board, and overlays based on game status
+  // calculate number of flags placed
+  var flags = board.flat().filter((c) => c.flagged).length
+
+  // render header, controls, timer, flag counter, board, and overlays based on game status
   return (
     <div className="container">
       <h1>MineSweeper</h1>
       <button onClick={resetGame}>New Game</button>
+      {/* display timer */}
+      <p>Time: {seconds}s</p>
+      {/* display flag counter */}
+      <p>Flags: {flags}/{TOTAL_MINES}</p>
       <Board
         board={board}
         setBoard={setBoard}

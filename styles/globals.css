@@ -27,7 +27,7 @@ button {
   background: #333;
   color: white;
   border: none;
-  padding: 12px 20px;
+  padding: 12px 10px;
   margin: 10px;
   border-radius: 8px;
   font-size: 1rem;
@@ -92,4 +92,11 @@ button:hover {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+.container > p {
+  background: rgba(0, 0, 0, 0.5);
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  display: inline-block;
+  margin: 0.5rem;
 }
