@@ -6,8 +6,8 @@ import Board from '../components/Board'
 
 // createBoard generates the initial minesweeper grid with mines and counts
 function createBoard() {
-  var SIZE = 12 // board dimensions (rows and columns)
-  var MINES = 30 // total number of mines to place
+  var SIZE = 10 // board dimensions (rows and columns)
+  var MINES = 20 // total number of mines to place
   var grid = [] // initialize empty grid array
 
   // fill grid with default cell objects
@@ -72,7 +72,7 @@ export default function Home() {
   // state hook for elapsed time in seconds
   var [seconds, setSeconds] = useState(0)
   // constant for total mines (flag counter reference)
-  var TOTAL_MINES = 30
+  var TOTAL_MINES = 20
 
   // effect hook to update timer every second when game is active
   useEffect(() => {
